@@ -1,0 +1,41 @@
+schema: spec-driven
+
+context: |
+  Проект: SPA для работы с грузовыми аукционами по готовой OpenAPI-схеме.
+  Источник правды по контракту — docs/openapi.auctions.v0.json. Требования — docs/project_requirements.md.
+
+  Обязательный стек: React, TypeScript (strict), Vite, TanStack Router, TanStack Query,
+  React Hook Form + Zod, MSW, Feature-Sliced Design. Клиентский UI-state — MobX (mobx + mobx-react-lite),
+  точечно и в слое конкретной фичи; серверное состояние — только TanStack Query (кэш, инвалидация, prefetch).
+
+  Архитектура — Feature-Sliced Design: слои src/{app,pages,widgets,features,entities,shared}.
+  Импорт разрешён только «вниз» по слоям; между слайсами одного слоя — только через публичный index.ts.
+  Path-алиасы: @app, @pages, @widgets, @features, @entities, @shared.
+
+  Backend не пишем: реализуем MSW-моки, которые точно соответствуют схеме и реально меняют состояние
+  после mutations (stateful in-memory store). Строго соблюдаем контракты: структуры запросов/ответов,
+  enum-значения (все с Unknown), nullable-поля, форматы ошибок (ProblemDetail; 422 — ValidationProblem с errors[]).
+
+  Эндпоинты: POST /auctions/list, GET /auctions/{auctionUuid}, GET /auctions/{auctionUuid}/bets,
+  POST /auctions/{auctionUuid}/bets.
+
+  Тесты: минимальные unit-тесты чистой логики (Vitest) — парсинг search params, request builder,
+  ViewModel-мапперы, Zod-схема ставки.
+
+rules:
+  specs:
+    - Требования выводить из контракта OpenAPI и ТЗ; фиксировать наблюдаемое поведение (входы/выходы/ошибки/edge cases), а не реализацию.
+    - Явно покрывать сценарии контракта — nullable-поля, enum со значением Unknown, скрытие данных (hide_bets_history, hide_points_address_and_contacts, no_view_cargo_price), ошибку 422.
+  tasks:
+    - Все файлы React-компонентов именовать с суффиксом *.component.tsx.
+    - Соблюдать границы слоёв FSD; общий код — в shared, доменные модели — в entities.
+    - Для фич с чистой логикой добавлять unit-тесты (search params parsing, request builder, мапперы, схема ставки).
+  design:
+    - Серверное состояние — TanStack Query; клиентский UI-state — MobX точечно. Не дублировать в MobX то, что держит Query.
+    - MSW-store — единственный источник состояния моков; mutations реально меняют его (цена, торговый статус, список ставок).
+
+operations:
+  apply:
+    guidance:
+      - Именовать файлы React-компонентов с суффиксом *.component.tsx.
+      - Проверять соответствие моков и типов контракту OpenAPI (enum, nullable, форматы ошибок).
