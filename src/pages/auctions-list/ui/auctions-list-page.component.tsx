@@ -1,19 +1,32 @@
-import { Card } from '@shared/ui'
+import { useState } from 'react'
+import { useNavigate, useSearch } from '@tanstack/react-router'
+import { AuctionsList } from '@widgets/auctions-list'
+import { AuctionFilters, createFiltersStore } from '@features/auction-filters'
+import type { FiltersSearch } from '@shared/lib/search'
 
-/**
- * Заглушка страницы списка аукционов.
- * Полная реализация (Query, фильтры, пагинация, состояния) — в change `auctions-list`.
- */
 export function AuctionsListPage() {
+  const search = useSearch({ from: '/' })
+  const navigate = useNavigate()
+  // Hydrate the draft store once from the initial URL search.
+  const [store] = useState(() => createFiltersStore(search))
+
+  const applySearch = (next: FiltersSearch) =>
+    navigate({ to: '/', search: next })
+
+  const changePage = (page: number) =>
+    navigate({ to: '/', search: { ...search, page } })
+
   return (
-    <section className="page">
+    <section className="page auctions-page">
       <h1 className="page__title">Аукционы</h1>
-      <Card className="placeholder">
-        <p>Список аукционов появится здесь.</p>
-        <p className="placeholder__hint">
-          Реализуется в change <code>auctions-list</code>.
-        </p>
-      </Card>
+      <div className="auctions-page__layout">
+        <aside className="auctions-page__filters">
+          <AuctionFilters store={store} onApply={applySearch} />
+        </aside>
+        <div className="auctions-page__list">
+          <AuctionsList search={search} onPageChange={changePage} />
+        </div>
+      </div>
     </section>
   )
 }

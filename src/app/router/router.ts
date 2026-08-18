@@ -8,6 +8,7 @@ import {
   AuctionDetailPage,
   NotFoundPage,
 } from '@pages/index'
+import { filtersSearchSchema } from '@shared/lib/search'
 import { RootLayout } from './root-layout.component'
 import { RootErrorBoundary } from './root-error.component'
 
@@ -21,6 +22,7 @@ const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: AuctionsListPage,
+  validateSearch: filtersSearchSchema,
 })
 
 const auctionDetailRoute = createRoute({
