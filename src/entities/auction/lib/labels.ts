@@ -2,18 +2,22 @@ import type {
   AuctionStatus,
   AuctionType,
   BidMeasurementType,
+  OperationType,
+  PaymentDelayType,
   TradingStatus,
 } from '@shared/api'
 
 // User-visible labels stay in Russian (product domain). Keys mirror the
-// OpenAPI enum values; every enum includes an `Unknown` fallback.
+// OpenAPI enum values; every enum includes an `Unknown` fallback ("—").
+
+const DASH = '—'
 
 export const AUCTION_TYPE_LABELS: Record<AuctionType, string> = {
   Request: 'Запрос цены',
   Up: 'На повышение',
   Down: 'На понижение',
   FixPrice: 'Фиксированная цена',
-  Unknown: 'Неизвестно',
+  Unknown: DASH,
 }
 
 export const AUCTION_STATUS_LABELS: Record<AuctionStatus, string> = {
@@ -25,7 +29,7 @@ export const AUCTION_STATUS_LABELS: Record<AuctionStatus, string> = {
   Finished: 'Завершён',
   Stopped: 'Остановлен',
   Canceled: 'Отменён',
-  Unknown: 'Неизвестно',
+  Unknown: DASH,
 }
 
 export const TRADING_STATUS_LABELS: Record<TradingStatus, string> = {
@@ -37,23 +41,42 @@ export const TRADING_STATUS_LABELS: Record<TradingStatus, string> = {
   ChoosingWinner: 'Выбор победителя',
   Winner: 'Победитель',
   Accepted: 'Принят',
-  Unknown: 'Неизвестно',
+  Unknown: DASH,
 }
 
+// Empty for Unknown so it reads cleanly as a price suffix, e.g. "… (За км)".
 export const BID_MEASUREMENT_LABELS: Record<BidMeasurementType, string> = {
-  PerRoute: 'за рейс',
-  PerKm: 'за км',
+  PerRoute: 'За рейс',
+  PerKm: 'За км',
   Unknown: '',
 }
 
+export const PAYMENT_DELAY_LABELS: Record<PaymentDelayType, string> = {
+  CalendarDays: 'календарных дней',
+  WorkDays: 'рабочих дней',
+  Unknown: DASH,
+}
+
+export const OPERATION_TYPE_LABELS: Record<OperationType, string> = {
+  Loading: 'Погрузка',
+  Unloading: 'Выгрузка',
+  Unknown: DASH,
+}
+
 export const auctionTypeLabel = (v: AuctionType): string =>
-  AUCTION_TYPE_LABELS[v] ?? AUCTION_TYPE_LABELS.Unknown
+  AUCTION_TYPE_LABELS[v]
 
 export const auctionStatusLabel = (v: AuctionStatus): string =>
-  AUCTION_STATUS_LABELS[v] ?? AUCTION_STATUS_LABELS.Unknown
+  AUCTION_STATUS_LABELS[v]
 
 export const tradingStatusLabel = (v: TradingStatus): string =>
-  TRADING_STATUS_LABELS[v] ?? TRADING_STATUS_LABELS.Unknown
+  TRADING_STATUS_LABELS[v]
 
 export const bidMeasurementLabel = (v: BidMeasurementType | null): string =>
-  v ? (BID_MEASUREMENT_LABELS[v] ?? '') : ''
+  v ? BID_MEASUREMENT_LABELS[v] : ''
+
+export const paymentDelayLabel = (v: PaymentDelayType): string =>
+  PAYMENT_DELAY_LABELS[v]
+
+export const operationTypeLabel = (v: OperationType): string =>
+  OPERATION_TYPE_LABELS[v]

@@ -1,2 +1,2 @@
-// Слой entities — наполняется в change api-and-mocks и далее.
+// Слой entities — доменные модели аукциона и ставки.
 export * from './auction'

@@ -1,2 +1,3 @@
-// Слой widgets — наполняется в change auctions-list / auction-detail / bets-view.
+// Слой widgets — списки, детальная, ставки.
 export * from './auctions-list'
+export * from './auction-detail'

@@ -1,44 +1,60 @@
 // Formatting helpers for auction display values. Output strings are Russian
-// (product locale); pure functions, unit-tested.
+// (ru-RU locale, ₽); pure functions, unit-tested.
 
-const priceFormatter = new Intl.NumberFormat('ru-RU', {
+const DASH = '—'
+
+// 0-fraction currency for compact list prices.
+const priceFmt = new Intl.NumberFormat('ru-RU', {
   style: 'currency',
   currency: 'RUB',
   maximumFractionDigits: 0,
 })
 
-const numberFormatter = new Intl.NumberFormat('ru-RU', {
+// 2-fraction currency for precise detail prices.
+const moneyFmt = new Intl.NumberFormat('ru-RU', {
+  style: 'currency',
+  currency: 'RUB',
   maximumFractionDigits: 2,
 })
 
-const dateFormatter = new Intl.DateTimeFormat('ru-RU', {
+const numberFmt = new Intl.NumberFormat('ru-RU', {
+  maximumFractionDigits: 2,
+})
+
+const dateFmt = new Intl.DateTimeFormat('ru-RU', {
   day: '2-digit',
   month: '2-digit',
   year: 'numeric',
 })
 
-const dash = '—'
+const dateTimeFmt = new Intl.DateTimeFormat('ru-RU', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+})
 
+/** Compact currency (no kopecks); dash for null/undefined. */
 export function formatPrice(value: number | null | undefined): string {
-  if (value == null) return dash
-  return priceFormatter.format(value)
+  if (value == null) return DASH
+  return priceFmt.format(value)
+}
+
+/** Precise currency; null for null/undefined so callers can render conditionally. */
+export function formatMoney(value: number | null | undefined): string | null {
+  if (value == null) return null
+  return moneyFmt.format(value)
 }
 
 export function formatNumber(value: number | null | undefined): string {
-  if (value == null) return dash
-  return numberFormatter.format(value)
-}
-
-export function formatDate(iso: string | null | undefined): string {
-  if (!iso) return dash
-  const date = new Date(iso)
-  if (Number.isNaN(date.getTime())) return dash
-  return dateFormatter.format(date)
+  if (value == null) return DASH
+  return numberFmt.format(value)
 }
 
 export function formatPricePerKm(value: number | null | undefined): string {
-  if (value == null) return dash
-  return `${numberFormatter.format(value)} ₽/км`
+  if (value == null) return DASH
+  return `${moneyFmt.format(value)}/км`
 }
 
 export function formatWeightVolume(
@@ -46,7 +62,21 @@ export function formatWeightVolume(
   volume: number | null | undefined,
 ): string {
   const parts: string[] = []
-  if (weight != null) parts.push(`${numberFormatter.format(weight)} т`)
-  if (volume != null) parts.push(`${numberFormatter.format(volume)} м³`)
-  return parts.length ? parts.join(' · ') : dash
+  if (weight != null) parts.push(`${numberFmt.format(weight)} т`)
+  if (volume != null) parts.push(`${numberFmt.format(volume)} м³`)
+  return parts.length ? parts.join(' · ') : DASH
+}
+
+export function formatDate(iso: string | null | undefined): string {
+  if (!iso) return DASH
+  const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return DASH
+  return dateFmt.format(date)
+}
+
+export function formatDateTime(iso: string | null | undefined): string {
+  if (!iso) return DASH
+  const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return DASH
+  return dateTimeFmt.format(date)
 }

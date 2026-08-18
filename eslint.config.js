@@ -17,7 +17,7 @@ const allowedDependencies = FSD_LAYERS.map((layer, index) => ({
 }))
 
 export default tseslint.config(
-  { ignores: ['dist', 'public/mockServiceWorker.js', 'coverage'] },
+  { ignores: ['dist', 'public/mockServiceWorker.js', 'coverage', '.claude'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
