@@ -1,5 +1,9 @@
 import { makeAutoObservable } from 'mobx'
-import type { AucTypeFilter, FiltersSearch } from '@shared/lib/search'
+import type {
+  AucTypeFilter,
+  FiltersSearch,
+  StatusFilter,
+} from '@shared/lib/search'
 
 const toNum = (v: string): number | undefined => {
   const n = Number(v)
@@ -16,6 +20,7 @@ const undef = (v: string): string | undefined =>
 export class FiltersStore {
   cargoNum = ''
   aucType: AucTypeFilter[] = []
+  status: StatusFilter[] = []
   statuses: number[] = []
   loadCity = ''
   unloadCity = ''
@@ -34,6 +39,7 @@ export class FiltersStore {
   hydrate(s: FiltersSearch): void {
     this.cargoNum = s.cargo_num ?? ''
     this.aucType = s.auc_type ?? []
+    this.status = s.status ?? []
     this.statuses = s.statuses ?? []
     this.loadCity = s.load_city ?? ''
     this.unloadCity = s.unload_city ?? ''
@@ -51,6 +57,10 @@ export class FiltersStore {
 
   toggleAucType(value: AucTypeFilter): void {
     this.aucType = toggle(this.aucType, value)
+  }
+
+  toggleStatusMobile(value: StatusFilter): void {
+    this.status = toggle(this.status, value)
   }
 
   toggleStatus(value: number): void {
@@ -71,6 +81,7 @@ export class FiltersStore {
     return {
       cargo_num: undef(this.cargoNum),
       auc_type: this.aucType.length ? this.aucType : undefined,
+      status: this.status.length ? this.status : undefined,
       statuses: this.statuses.length ? this.statuses : undefined,
       load_city: undef(this.loadCity),
       unload_city: undef(this.unloadCity),

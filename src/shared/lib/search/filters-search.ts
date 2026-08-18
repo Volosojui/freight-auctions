@@ -11,7 +11,7 @@ import {
  */
 
 const AUCTION_TYPES = ['Request', 'Up', 'Down', 'FixPrice'] as const
-const TRADING_STATUSES = [
+export const TRADING_STATUSES = [
   'NotParticipating',
   'Leading',
   'Losing',
@@ -71,6 +71,7 @@ export type FiltersSearch = z.infer<typeof filtersSearchSchema>
 
 /** Filter member type for the auction-type facet (excludes `Unknown`). */
 export type AucTypeFilter = NonNullable<FiltersSearch['auc_type']>[number]
+export type StatusFilter = NonNullable<FiltersSearch['status']>[number]
 
 export const DEFAULT_PAGE = 1
 export const DEFAULT_PER_PAGE = 20

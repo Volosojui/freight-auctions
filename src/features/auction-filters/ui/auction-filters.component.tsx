@@ -1,8 +1,16 @@
 import { observer } from 'mobx-react-lite'
 import { Button, Card } from '@shared/ui'
 import { CITIES } from '@shared/api/mock/cities'
-import { AUCTION_STATUS_LABELS, AUCTION_TYPE_LABELS } from '@entities/auction'
-import type { AucTypeFilter, FiltersSearch } from '@shared/lib/search'
+import {
+  AUCTION_STATUS_LABELS,
+  AUCTION_TYPE_LABELS,
+  TRADING_STATUS_LABELS,
+} from '@entities/auction'
+import {
+  TRADING_STATUSES,
+  type AucTypeFilter,
+  type FiltersSearch,
+} from '@shared/lib/search'
 import type { FiltersStore } from '../model/filters-store'
 
 interface AuctionFiltersProps {
@@ -78,6 +86,22 @@ export const AuctionFilters = observer(function AuctionFilters({
                   onChange={() => store.toggleStatus(code)}
                 />
                 {AUCTION_STATUS_LABELS[value]}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="field">
+          <span className="field__label">Мой статус</span>
+          <div className="chips">
+            {TRADING_STATUSES.map((s) => (
+              <label key={s} className="chip">
+                <input
+                  type="checkbox"
+                  checked={store.status.includes(s)}
+                  onChange={() => store.toggleStatusMobile(s)}
+                />
+                {TRADING_STATUS_LABELS[s]}
               </label>
             ))}
           </div>
