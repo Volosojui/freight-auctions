@@ -4,11 +4,12 @@ import { App } from '@app/index'
 import './app/styles/global.css'
 
 /**
- * Включаем MSW только в dev. Динамический импорт гарантирует, что мок-код и
- * данные не попадают в production-бандл (ветка недостижима при DEV === false).
+ * The app is mock-only (no real backend), so MSW runs in every environment —
+ * dev, tests and the production deploy. The worker is started (and awaited)
+ * before the first render so it controls the page and intercepts API requests
+ * instead of letting them hit the network.
  */
 async function enableMocking(): Promise<void> {
-  if (!import.meta.env.DEV) return
   const { worker } = await import('@shared/api/mock')
   await worker.start({ onUnhandledRequest: 'bypass' })
 }

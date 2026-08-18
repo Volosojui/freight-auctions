@@ -75,10 +75,20 @@ paginate with a correct `meta`. `POST …/bets` validates the body (422 on
 places, and updates the current price, the user's bid state and trading status —
 so the change is observable after query invalidation.
 
-MSW is started only in dev and tests (dynamic import guarded by
-`import.meta.env.DEV`), so the mock worker, handlers and seed are excluded from
-the production bundle. The shared city dictionary (`shared/api/mock/cities.ts`)
-is intentionally bundled, because the filter's city dropdown consumes it.
+Because the app is mock-only (no real backend), MSW runs in **every**
+environment — dev, tests and the production build. The worker is started and
+awaited before the first render so it controls the page and intercepts API
+requests; the worker, handlers and seed are therefore part of the production
+bundle (intentional for a demo with no real API).
+
+### Deploy (Netlify)
+
+Build with `npm run build` and publish `dist/`. Two things make it work:
+
+- `public/mockServiceWorker.js` is served at the site root, and MSW starts on
+  load, so API requests are handled client-side (no backend to reach).
+- `public/_redirects` (`/*  /index.html  200`) is the SPA fallback so deep links
+  and refresh on `/auctions/…` serve `index.html` for the client router.
 
 ## Verification
 
@@ -90,7 +100,9 @@ running app.
 - `npm run lint` — no errors (FSD import boundaries + `*.component.tsx` naming).
 - `npm run test` — **89 unit + integration tests** (Vitest, jsdom + MSW).
 - `npm run test:e2e` — **17 end-to-end tests** (Playwright, real Chromium).
-- `npm run build` — type-checks and builds; the MSW backend is not in the bundle.
+- `npm run build` — type-checks and builds; the bundle includes the MSW backend
+  (the app is mock-only), verified working against the production build via
+  `vite preview`.
 
 **Scenarios covered:**
 

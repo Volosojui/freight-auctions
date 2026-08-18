@@ -52,6 +52,10 @@ merge time.
 - The AI reported the trading-`status` filter as "done" while it was only in the
   schema/URL, with no store field or UI. I caught the gap and had it wired and
   tested so the full ТЗ minimum filter set is actually present.
+- The AI initially gated MSW on `import.meta.env.DEV` to keep mocks out of the
+  production bundle. Since the app has no real backend, that broke the Netlify
+  deploy (`ERR_NAME_NOT_RESOLVED`). I had it changed to run MSW in every
+  environment and added a Netlify SPA redirect.
 
 ## What I reviewed especially carefully
 
