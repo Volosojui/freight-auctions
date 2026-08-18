@@ -14,11 +14,15 @@ test('applying a filter updates the URL and narrows results', async ({
   await page.goto('/')
   await expect(page.getByTestId('auctions-list')).toBeVisible()
 
+  // Filters live in a slide-over drawer, opened from the toolbar button.
+  await page.getByTestId('filters-open').click()
   await page.getByPlaceholder('00000001001').fill('00000001003')
   await page.getByRole('button', { name: 'Применить' }).click()
 
   await expect(page).toHaveURL(/cargo_num=00000001003/)
   await expect(page.getByTestId('auction-card')).toHaveCount(1)
+  // Applied filter shows as a removable chip.
+  await expect(page.getByTestId('active-filters')).toContainText('00000001003')
 })
 
 test('navigates from the list to the detail route (prefetch on intent)', async ({

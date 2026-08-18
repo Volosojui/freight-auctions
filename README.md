@@ -16,6 +16,8 @@ state on writes.
 - **TanStack Query** (server state: caching, invalidation, prefetch)
 - **React Hook Form** + **Zod** (forms and validation)
 - **MobX** (`mobx-react-lite`) — pointwise client UI state only
+- **lucide-react** — icon set
+- Custom CSS design tokens — light/dark theming (no UI framework)
 - **MSW** — stateful in-memory mock backend
 - **Feature-Sliced Design** — enforced with ESLint (`eslint-plugin-boundaries`)
 - **Vitest** + Testing Library (unit / integration), **Playwright** (e2e)
@@ -98,8 +100,8 @@ running app.
 **Automated (all green):**
 
 - `npm run lint` — no errors (FSD import boundaries + `*.component.tsx` naming).
-- `npm run test` — **89 unit + integration tests** (Vitest, jsdom + MSW).
-- `npm run test:e2e` — **17 end-to-end tests** (Playwright, real Chromium).
+- `npm run test` — **98 unit + integration tests** (Vitest, jsdom + MSW).
+- `npm run test:e2e` — **19 end-to-end tests** (Playwright, real Chromium).
 - `npm run build` — type-checks and builds; the bundle includes the MSW backend
   (the app is mock-only), verified working against the production build via
   `vite preview`.

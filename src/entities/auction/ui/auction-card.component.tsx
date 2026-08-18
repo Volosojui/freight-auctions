@@ -1,4 +1,13 @@
 import { Link } from '@tanstack/react-router'
+import {
+  Banknote,
+  CalendarArrowDown,
+  CalendarArrowUp,
+  Eye,
+  Gavel,
+  MapPin,
+  Package,
+} from 'lucide-react'
 import { Button, Card } from '@shared/ui'
 import type { AuctionCardVM } from '../model/card-vm'
 
@@ -36,6 +45,7 @@ export function AuctionCard({ vm, onIntent }: AuctionCardProps) {
       </div>
 
       <div className="auction-card__route">
+        <MapPin size={16} aria-hidden="true" />
         <strong>{vm.route.from}</strong>
         <span className="auction-card__arrow"> → </span>
         <strong>{vm.route.to}</strong>
@@ -43,21 +53,33 @@ export function AuctionCard({ vm, onIntent }: AuctionCardProps) {
 
       <dl className="auction-card__meta">
         <div>
-          <dt>Погрузка</dt>
+          <dt>
+            <CalendarArrowUp size={15} aria-hidden="true" />
+            Погрузка
+          </dt>
           <dd>{vm.loadDate}</dd>
         </div>
         <div>
-          <dt>Выгрузка</dt>
+          <dt>
+            <CalendarArrowDown size={15} aria-hidden="true" />
+            Выгрузка
+          </dt>
           <dd>{vm.unloadDate}</dd>
         </div>
         <div>
-          <dt>Груз</dt>
+          <dt>
+            <Package size={15} aria-hidden="true" />
+            Груз
+          </dt>
           <dd>
             {vm.cargo.name} · {vm.cargo.weightVolume} · {vm.cargo.bodyType}
           </dd>
         </div>
         <div>
-          <dt>Цена / за км / шаг</dt>
+          <dt>
+            <Banknote size={15} aria-hidden="true" />
+            Цена / за км / шаг
+          </dt>
           <dd>
             {vm.currentPrice} · {vm.pricePerKm} · {vm.step}
           </dd>
@@ -82,6 +104,11 @@ export function AuctionCard({ vm, onIntent }: AuctionCardProps) {
             }
           >
             <Button variant={vm.primaryAction.kind === 'view' ? 'secondary' : 'primary'}>
+              {vm.primaryAction.kind === 'view' ? (
+                <Eye size={16} aria-hidden="true" />
+              ) : (
+                <Gavel size={16} aria-hidden="true" />
+              )}
               {vm.primaryAction.label}
             </Button>
           </Link>

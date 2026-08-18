@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { observer } from 'mobx-react-lite'
@@ -22,6 +22,46 @@ export const PlaceBetModal = observer(function PlaceBetModal({
   const { data, isPending } = useAuctionDetailQuery(auctionUuid)
   const mutation = usePlaceBet(auctionUuid)
   const [ui] = useState(createPlaceBetStore)
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  // Accessibility: close on Esc, trap Tab focus inside the dialog, and return
+  // focus to the element that opened it.
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null
+    const focusable = () =>
+      Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      ).filter((el) => !el.hasAttribute('disabled'))
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        e.stopPropagation()
+        onClose()
+        return
+      }
+      if (e.key === 'Tab') {
+        const items = focusable()
+        if (items.length === 0) return
+        const first = items[0]
+        const last = items[items.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      opener?.focus?.()
+    }
+  }, [onClose])
 
   const price = data?.trading.price
   const bounds = {
@@ -78,6 +118,7 @@ export const PlaceBetModal = observer(function PlaceBetModal({
       data-testid="place-bet-backdrop"
     >
       <div
+        ref={dialogRef}
         className="modal"
         role="dialog"
         aria-modal="true"

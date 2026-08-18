@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from '@app/index'
+import { initTheme } from '@shared/lib/theme'
 import './app/styles/global.css'
 
 /**
@@ -15,6 +16,7 @@ async function enableMocking(): Promise<void> {
 }
 
 function mount(): void {
+  initTheme()
   const rootElement = document.getElementById('root')
   if (!rootElement) throw new Error('Root element #root not found')
 

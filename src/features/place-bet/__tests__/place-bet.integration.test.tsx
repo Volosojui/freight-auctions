@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { http, HttpResponse } from 'msw'
@@ -99,6 +99,21 @@ describe('PlaceBetModal — server errors', () => {
     await waitFor(() =>
       expect(toastStore.toasts.some((t) => t.kind === 'error')).toBe(true),
     )
+  })
+})
+
+describe('PlaceBetModal — accessibility', () => {
+  it('moves focus to the price input on open (focus stays inside)', async () => {
+    renderModal('auc-0001')
+    const input = await screen.findByTestId('bet-price')
+    await waitFor(() => expect(input).toHaveFocus())
+  })
+
+  it('closes on Escape', async () => {
+    const { onClose } = renderModal('auc-0001')
+    await screen.findByTestId('bet-price')
+    fireEvent.keyDown(document, { key: 'Escape' })
+    await waitFor(() => expect(onClose).toHaveBeenCalled())
   })
 })
 

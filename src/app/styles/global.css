@@ -1,43 +1,144 @@
+/* ==========================================================================
+   Design tokens — B2B / data-focused (Minimalism / Swiss).
+   Light on :root; dark via prefers-color-scheme (system default) and
+   [data-theme] (explicit choice). Every color has a light definition here.
+   ========================================================================== */
 :root {
-  --bg: #f4f6f8;
+  /* Palette (light) */
+  --bg: #f8fafc;
   --surface: #ffffff;
-  --border: #e2e6ea;
-  --text: #1b2733;
-  --text-muted: #5c6b7a;
-  --primary: #2563eb;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --brand: #0f172a;
+  --primary: #0369a1;
+  --primary-hover: #075e8c;
   --primary-contrast: #ffffff;
+  --ring: #0369a1;
+  --success: #15803d;
+  --success-bg: #e7f6ec;
   --danger: #dc2626;
-  --success: #16a34a;
-  --radius: 10px;
-  --shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
-  --content-max: 1120px;
+  --danger-bg: #fdeaea;
+  --warning: #b45309;
+  --badge-bg: #eef4f9;
+  --badge-fg: #0b4a6f;
+  --own-bg: #e7f6ec;
+  --own-fg: #166534;
+
+  /* Typography scale */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-md: 0.875rem;
+  --fs-lg: 1rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.625rem;
+
+  /* Spacing (4px rhythm) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+
+  /* Radius & elevation */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-pill: 999px;
+  --e-1: 0 1px 2px rgba(2, 6, 23, 0.06);
+  --e-2: 0 4px 12px rgba(2, 6, 23, 0.1);
+  --e-modal: 0 16px 48px rgba(2, 6, 23, 0.28);
+  --scrim: rgba(2, 6, 23, 0.45);
+
+  --content-max: 1160px;
 
   color: var(--text);
   background: var(--bg);
   font-family:
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    sans-serif;
+    system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Dark — system default (unless an explicit light choice is set) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0b1220;
+    --surface: #111a2b;
+    --card: #131d30;
+    --border: #25324a;
+    --border-strong: #33425f;
+    --text: #e6edf6;
+    --text-muted: #9fb0c7;
+    --brand: #e6edf6;
+    --primary: #38a3d9;
+    --primary-hover: #57b6e6;
+    --primary-contrast: #08131f;
+    --ring: #57b6e6;
+    --success: #4ade80;
+    --success-bg: #12281c;
+    --danger: #f87171;
+    --danger-bg: #2c1417;
+    --warning: #fbbf24;
+    --badge-bg: #12233a;
+    --badge-fg: #9ad1f0;
+    --own-bg: #12281c;
+    --own-fg: #86efac;
+    --e-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --e-2: 0 6px 16px rgba(0, 0, 0, 0.5);
+    --e-modal: 0 20px 56px rgba(0, 0, 0, 0.65);
+    --scrim: rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Dark — explicit choice (wins over system in both directions) */
+:root[data-theme='dark'] {
+  --bg: #0b1220;
+  --surface: #111a2b;
+  --card: #131d30;
+  --border: #25324a;
+  --border-strong: #33425f;
+  --text: #e6edf6;
+  --text-muted: #9fb0c7;
+  --brand: #e6edf6;
+  --primary: #38a3d9;
+  --primary-hover: #57b6e6;
+  --primary-contrast: #08131f;
+  --ring: #57b6e6;
+  --success: #4ade80;
+  --success-bg: #12281c;
+  --danger: #f87171;
+  --danger-bg: #2c1417;
+  --warning: #fbbf24;
+  --badge-bg: #12233a;
+  --badge-fg: #9ad1f0;
+  --own-bg: #12281c;
+  --own-fg: #86efac;
+  --e-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --e-2: 0 6px 16px rgba(0, 0, 0, 0.5);
+  --e-modal: 0 20px 56px rgba(0, 0, 0, 0.65);
+  --scrim: rgba(0, 0, 0, 0.6);
+}
+
+/* Base -------------------------------------------------------------------- */
 * {
   box-sizing: border-box;
 }
-
 html,
 body,
 #root {
   margin: 0;
   min-height: 100%;
 }
-
 body {
   overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
 }
-
 a {
   color: var(--primary);
   text-decoration: none;
@@ -46,54 +147,107 @@ a:hover {
   text-decoration: underline;
 }
 
-/* App shell ---------------------------------------------------------------- */
+/* Tabular figures for data/prices */
+.num,
+.auction-card__meta dd,
+.bet-row__prices,
+.bets__count,
+.pagination__info {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Visible focus for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* App shell --------------------------------------------------------------- */
 .app-shell {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-
 .app-header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: saturate(1.1) blur(6px);
   border-bottom: 1px solid var(--border);
 }
 .app-header__inner,
 .app-main__inner {
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 var(--sp-6);
   width: 100%;
 }
 .app-header__inner {
-  height: 60px;
+  height: 58px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
 }
 .app-header__brand {
   font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--text);
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--brand);
 }
 .app-header__brand:hover {
   text-decoration: none;
 }
-
 .app-main {
   flex: 1;
-  padding: 24px 0 48px;
+  padding: var(--sp-6) 0 var(--sp-8);
 }
 
-/* Page --------------------------------------------------------------------- */
+/* Theme toggle */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+/* Page & states ----------------------------------------------------------- */
 .page__title {
-  font-size: 1.5rem;
-  margin: 0 0 16px;
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--sp-4);
 }
 .breadcrumbs {
-  margin: 0 0 8px;
-  font-size: 0.9rem;
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-md);
 }
 .placeholder__hint,
 .state__text {
@@ -101,35 +255,41 @@ a:hover {
 }
 .state {
   text-align: center;
-  padding-top: 40px;
+  padding: var(--sp-8) var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
 }
 
-/* Primitives --------------------------------------------------------------- */
+/* Primitives -------------------------------------------------------------- */
 .card {
-  background: var(--surface);
+  background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 20px;
+  border-radius: var(--r-md);
+  box-shadow: var(--e-1);
+  padding: var(--sp-6);
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--sp-2);
   border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 9px 16px;
-  font-size: 0.95rem;
+  border-radius: var(--r-md);
+  padding: 9px 15px;
+  font-size: var(--fs-md);
   font-weight: 500;
+  line-height: 1;
   cursor: pointer;
   transition:
-    background 0.15s ease,
-    border-color 0.15s ease;
+    background 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
 }
 .btn:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 .btn--primary {
@@ -137,22 +297,35 @@ a:hover {
   color: var(--primary-contrast);
 }
 .btn--primary:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: var(--primary-hover);
 }
 .btn--secondary {
   background: var(--surface);
-  border-color: var(--border);
+  border-color: var(--border-strong);
   color: var(--text);
+}
+.btn--secondary:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 .btn--ghost {
   background: transparent;
   color: var(--primary);
 }
+.btn--ghost:hover:not(:disabled) {
+  background: var(--badge-bg);
+}
 
 .skeleton {
   display: inline-block;
-  background: linear-gradient(90deg, #e9edf1 25%, #f2f5f8 37%, #e9edf1 63%);
+  background: linear-gradient(
+    90deg,
+    var(--border) 25%,
+    color-mix(in srgb, var(--border) 45%, var(--surface)) 37%,
+    var(--border) 63%
+  );
   background-size: 400% 100%;
+  border-radius: var(--r-sm);
   animation: skeleton-shimmer 1.4s ease infinite;
 }
 @keyframes skeleton-shimmer {
@@ -179,39 +352,61 @@ a:hover {
   }
 }
 
-/* Toasts ------------------------------------------------------------------- */
+/* Badges (status; color + text, never color-only) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+  white-space: nowrap;
+}
+.badge--muted {
+  background: color-mix(in srgb, var(--text-muted) 14%, transparent);
+  color: var(--text-muted);
+}
+.badge--own {
+  background: var(--own-bg);
+  color: var(--own-fg);
+}
+
+/* Toasts ------------------------------------------------------------------ */
 .toast-host {
   position: fixed;
-  right: 16px;
-  bottom: 16px;
+  right: var(--sp-4);
+  bottom: var(--sp-4);
   z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--sp-2);
   max-width: min(360px, calc(100vw - 32px));
 }
 .toast {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 8px;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
   background: var(--surface);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  box-shadow: var(--e-2);
 }
 .toast--success {
-  border-left: 4px solid var(--success);
+  border-left: 3px solid var(--success);
 }
 .toast--error {
-  border-left: 4px solid var(--danger);
+  border-left: 3px solid var(--danger);
 }
 .toast--info {
-  border-left: 4px solid var(--primary);
+  border-left: 3px solid var(--primary);
 }
 .toast__message {
   flex: 1;
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
 }
 .toast__close {
   border: none;
@@ -222,88 +417,139 @@ a:hover {
   color: var(--text-muted);
 }
 
-/* Responsive --------------------------------------------------------------- */
-@media (max-width: 767px) {
-  .app-header__inner,
-  .app-main__inner {
-    padding: 0 14px;
-  }
-  .page__title {
-    font-size: 1.25rem;
-  }
+/* Auctions list page ------------------------------------------------------ */
+.auctions-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
 }
-
-/* Auctions list page (change: auctions-list) --------------------------------- */
-.auctions-page__layout {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 20px;
-  align-items: start;
+.filters-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--primary-contrast);
+  font-size: 0.68rem;
+  font-weight: 700;
 }
-.auctions-page__filters {
-  position: sticky;
-  top: 76px;
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease;
+}
+.filter-chip:hover {
+  border-color: var(--border-strong);
 }
 .filters__form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--sp-3);
 }
 .field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--sp-1);
 }
 .field__label {
-  font-size: 0.8rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   color: var(--text-muted);
 }
 .field__input {
   padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
   font: inherit;
+  font-size: var(--fs-md);
   background: var(--surface);
+  color: var(--text);
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+.field__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 22%, transparent);
+}
+.field__error {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--danger);
 }
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 12px;
+  gap: var(--sp-1) var(--sp-3);
 }
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
+  cursor: pointer;
 }
 .filters__actions {
   display: flex;
-  gap: 8px;
-  margin-top: 4px;
+  gap: var(--sp-2);
+  margin-top: var(--sp-1);
 }
 
 .auctions-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-8);
 }
 .auction-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--sp-4);
+  padding: var(--sp-6);
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.16s ease;
+}
+.auction-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--e-2);
 }
 .auction-card__head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 .auction-card__num {
   font-weight: 700;
+  letter-spacing: -0.01em;
 }
 .auction-card__type {
-  font-size: 0.8rem;
+  font-size: var(--fs-xs);
   color: var(--text-muted);
 }
 .auction-card__badges {
@@ -311,37 +557,47 @@ a:hover {
   flex-wrap: wrap;
   gap: 6px;
 }
-.badge {
-  font-size: 0.75rem;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: #eef2ff;
-  color: #3730a3;
-}
-.badge--muted {
-  background: #f1f5f9;
-  color: var(--text-muted);
-}
-.badge--own {
-  background: #dcfce7;
-  color: #166534;
-}
 .auction-card__route {
-  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+.auction-card__route svg {
+  color: var(--primary);
+  flex: none;
 }
 .auction-card__arrow {
   color: var(--text-muted);
+  font-weight: 400;
 }
 .auction-card__meta {
   display: grid;
-  gap: 6px;
+  gap: var(--sp-3);
   margin: 0;
-  font-size: 0.88rem;
+  font-size: var(--fs-md);
 }
 .auction-card__meta div {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px dashed var(--border);
+}
+.auction-card__meta dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.auction-card__meta dt svg {
+  color: var(--text-muted);
+  flex: none;
+}
+.auction-card__meta div:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 .auction-card__meta dt {
   color: var(--text-muted);
@@ -349,6 +605,7 @@ a:hover {
 .auction-card__meta dd {
   margin: 0;
   text-align: right;
+  font-weight: 500;
 }
 .auction-card__action {
   margin-top: auto;
@@ -358,18 +615,23 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: var(--sp-4);
 }
 .pagination__info {
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   color: var(--text-muted);
 }
 
+/* Responsive -------------------------------------------------------------- */
 @media (max-width: 767px) {
-  .auctions-page__layout {
-    grid-template-columns: 1fr;
+  .app-header__inner,
+  .app-main__inner {
+    padding: 0 var(--sp-4);
   }
-  .auctions-page__filters {
-    position: static;
+  .page__title {
+    font-size: var(--fs-xl);
+  }
+  .auctions-list {
+    grid-template-columns: 1fr;
   }
 }

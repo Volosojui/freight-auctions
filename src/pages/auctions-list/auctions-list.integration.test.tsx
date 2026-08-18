@@ -94,10 +94,13 @@ describe('auctions list — states', () => {
 })
 
 describe('auctions list — filters and pagination', () => {
-  it('restores filters and page from the URL', async () => {
+  it('restores filters from the URL (shown in the filters drawer)', async () => {
+    const user = userEvent.setup()
     renderAt('/?cargo_num=00000001003')
     expect(await screen.findByTestId('auctions-list')).toBeInTheDocument()
     expect(screen.getAllByTestId('auction-card')).toHaveLength(1)
+
+    await user.click(screen.getByTestId('filters-open'))
     expect(screen.getByPlaceholderText('00000001001')).toHaveValue('00000001003')
   })
 
@@ -106,6 +109,7 @@ describe('auctions list — filters and pagination', () => {
     const router = renderAt('/')
     await screen.findByTestId('auctions-list')
 
+    await user.click(screen.getByTestId('filters-open'))
     await user.type(screen.getByPlaceholderText('00000001001'), '00000001003')
     await user.click(screen.getByRole('button', { name: 'Применить' }))
 
@@ -117,6 +121,20 @@ describe('auctions list — filters and pagination', () => {
     })
     // clean URL: applying a filter returns to page 1 (page omitted)
     expect(router.state.location.search.page).toBeUndefined()
+  })
+
+  it('shows an active-filter chip with a count and removes it on click', async () => {
+    const user = userEvent.setup()
+    const router = renderAt('/?cargo_num=00000001003')
+    await screen.findByTestId('auctions-list')
+
+    expect(screen.getByTestId('filters-count')).toHaveTextContent('1')
+    const chip = screen.getByRole('button', { name: /Убрать фильтр/ })
+    await user.click(chip)
+
+    await waitFor(() =>
+      expect(router.state.location.search.cargo_num).toBeUndefined(),
+    )
   })
 
   it('paginates via meta', async () => {

@@ -1,3 +1,4 @@
+import { Ban, Trophy } from 'lucide-react'
 import type { BetRowVM } from '../model/bet-row-vm'
 
 interface Props {
@@ -22,7 +23,12 @@ export function BetRow({ vm, rank }: Props) {
       <div className="bet-row__carrier">
         <div className="bet-row__org">
           <span>{vm.carrier}</span>
-          {vm.isWin && <span className="badge badge--own">Победитель</span>}
+          {vm.isWin && (
+            <span className="badge badge--own">
+              <Trophy size={13} aria-hidden="true" />
+              Победитель
+            </span>
+          )}
           {vm.isCounter && <span className="badge badge--muted">Встречная</span>}
         </div>
         <div className="bet-row__contact">
@@ -31,6 +37,7 @@ export function BetRow({ vm, rank }: Props) {
         </div>
         {vm.isRejected && (
           <div className="bet-row__rejected" data-testid="bet-rejected">
+            <Ban size={14} aria-hidden="true" />
             Ставка отменена{vm.cancelReason ? `: ${vm.cancelReason}` : ''}
           </div>
         )}

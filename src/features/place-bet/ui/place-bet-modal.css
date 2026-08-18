@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(16, 24, 40, 0.45);
+  background: var(--scrim);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,8 +10,9 @@
 }
 .modal {
   background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: 0 12px 40px rgba(16, 24, 40, 0.25);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-modal);
   width: 100%;
   max-width: 420px;
   padding: 20px;

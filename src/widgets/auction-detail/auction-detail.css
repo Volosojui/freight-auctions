@@ -1,7 +1,7 @@
 .detail {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--sp-6);
 }
 
 .detail__actions {
@@ -18,17 +18,18 @@
 .detail__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: var(--sp-6);
 }
 
 .section__title {
-  font-size: 1.05rem;
-  margin: 0 0 12px;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  margin: 0 0 var(--sp-4);
 }
 .section__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px 16px;
+  gap: var(--sp-4) var(--sp-6);
 }
 .section__note {
   color: var(--text-muted);
@@ -46,8 +47,13 @@
   gap: 2px;
   min-width: 0;
 }
+.section__grid .field {
+  gap: var(--sp-1);
+}
 .field__label {
-  font-size: 0.78rem;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   color: var(--text-muted);
 }
 .field__value {
