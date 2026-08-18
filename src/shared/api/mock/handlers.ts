@@ -4,6 +4,7 @@ import { auctionListRequestSchema, setBetRequestSchema } from '../contract'
 import type { ProblemDetail, ValidationProblem } from '../problem'
 import { getStore } from './store'
 import { filterAuctions, paginate } from './query'
+import { placeBet } from './mutations'
 
 const url = (path: string): string => `${API_BASE_URL}${path}`
 
@@ -76,6 +77,7 @@ export const handlers: RequestHandler[] = [
       return HttpResponse.json(problem, { status: 422 })
     }
 
-    return HttpResponse.json({ ok: true, price: parsed.data.price })
+    const bet = placeBet(getStore(), String(params.auctionUuid), parsed.data.price)
+    return HttpResponse.json({ ok: true, bet })
   }),
 ]

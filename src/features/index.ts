@@ -1,2 +1,3 @@
-// Слой features — наполняется в change auction-filters / place-bet.
+// Слой features — фильтры, форма ставки.
 export * from './auction-filters'
+export * from './place-bet'

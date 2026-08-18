@@ -29,6 +29,13 @@ const auctionDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/auctions/$auctionUuid',
   component: AuctionDetailPage,
+  // `?bid=1` opens the addressable bid form over the detail page.
+  validateSearch: (search: Record<string, unknown>): { bid?: true } => {
+    const bid = search.bid
+    return bid === true || bid === 'true' || bid === 1 || bid === '1'
+      ? { bid: true }
+      : {}
+  },
 })
 
 const routeTree = rootRoute.addChildren([indexRoute, auctionDetailRoute])

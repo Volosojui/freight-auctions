@@ -70,7 +70,17 @@ export function AuctionCard({ vm, onIntent }: AuctionCardProps) {
             {vm.primaryAction.label}
           </Button>
         ) : (
-          <Link to="/auctions/$auctionUuid" params={{ auctionUuid: vm.uuid }}>
+          <Link
+            to="/auctions/$auctionUuid"
+            params={{ auctionUuid: vm.uuid }}
+            // "Сделать/Изменить ставку" opens the bid form on the detail page.
+            search={
+              vm.primaryAction.kind === 'create' ||
+              vm.primaryAction.kind === 'edit'
+                ? { bid: true }
+                : {}
+            }
+          >
             <Button variant={vm.primaryAction.kind === 'view' ? 'secondary' : 'primary'}>
               {vm.primaryAction.label}
             </Button>

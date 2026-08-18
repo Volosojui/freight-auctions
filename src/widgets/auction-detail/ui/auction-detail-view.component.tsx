@@ -12,10 +12,12 @@ interface Props {
   vm: DetailVM
   /** Opens the bets tab; wired by the page (bets-view). */
   onViewBets?: () => void
+  /** Opens the bid form; wired by the page (place-bet). */
+  onPlaceBet?: () => void
 }
 
 /** Composes all detail sections and the flag-driven action entry points. */
-export function AuctionDetailView({ vm, onViewBets }: Props) {
+export function AuctionDetailView({ vm, onViewBets, onPlaceBet }: Props) {
   const { flags } = vm
 
   return (
@@ -27,6 +29,7 @@ export function AuctionDetailView({ vm, onViewBets }: Props) {
         <Button
           variant="primary"
           disabled={!flags.canSetBet}
+          onClick={onPlaceBet}
           data-testid="bid-action"
         >
           Сделать ставку
