@@ -27,7 +27,7 @@ export function AuctionDetailView({ vm, onViewBets, onPlaceBet }: Props) {
             by the bets-view and place-bet changes; availability is driven by
             the DTO flags here. */}
         <Button
-          variant="accent"
+          variant="primary"
           disabled={!flags.canSetBet}
           onClick={onPlaceBet}
           data-testid="bid-action"

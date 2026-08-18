@@ -180,7 +180,6 @@ export const PlaceBetModal = observer(function PlaceBetModal({
               </Button>
               <Button
                 type="submit"
-                variant="accent"
                 disabled={isSubmitting}
                 data-testid="bet-submit"
               >
