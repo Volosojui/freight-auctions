@@ -1,0 +1,114 @@
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.detail__note {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.detail__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.section__title {
+  font-size: 1.05rem;
+  margin: 0 0 12px;
+}
+.section__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+}
+.section__note {
+  color: var(--text-muted);
+  margin: 8px 0 0;
+}
+.section__tags {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.field__label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.field__value {
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.contacts {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.contacts__item {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+.route {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.route__head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+.route__op {
+  font-weight: 600;
+}
+.route__meta {
+  display: flex;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.route__address--hidden {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.your-bet {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.your-bet__title {
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+}
+
+@media (max-width: 767px) {
+  .detail__grid,
+  .section__grid {
+    grid-template-columns: 1fr;
+  }
+}

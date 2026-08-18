@@ -22,7 +22,9 @@ test('неизвестный маршрут показывает состоян�
 
 test('маршрут детальной принимает параметр auctionUuid', async ({ page }) => {
   await page.goto('/auctions/auc-0001')
-  await expect(page.getByText('auc-0001')).toBeVisible()
+  // The detail route resolves the param and loads the auction (see
+  // auction-detail.e2e.ts for the section-level assertions).
+  await expect(page.getByRole('heading', { name: 'Основное' })).toBeVisible()
 })
 
 test('навигация без полной перезагрузки', async ({ page }) => {
