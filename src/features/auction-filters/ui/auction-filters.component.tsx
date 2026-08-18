@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { Button, Card } from '@shared/ui'
+import { Button } from '@shared/ui'
 import { CITIES } from '@shared/api/mock/cities'
 import {
   AUCTION_STATUS_LABELS,
@@ -47,8 +47,7 @@ export const AuctionFilters = observer(function AuctionFilters({
   }
 
   return (
-    <Card className="filters" aria-label="Фильтры">
-      <form className="filters__form" onSubmit={submit}>
+    <form className="filters__form" aria-label="Фильтры" onSubmit={submit}>
         <label className="field">
           <span className="field__label">Номер заявки</span>
           <input
@@ -214,6 +213,5 @@ export const AuctionFilters = observer(function AuctionFilters({
           </Button>
         </div>
       </form>
-    </Card>
   )
 })

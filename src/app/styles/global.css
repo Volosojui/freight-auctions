@@ -10,22 +10,25 @@
   --card: #ffffff;
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
-  --text: #0f172a;
+  --text: #1e293b;
   --text-muted: #475569;
-  --brand: #0f172a;
-  --primary: #0369a1;
-  --primary-hover: #075e8c;
+  --brand: #1e293b;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
   --primary-contrast: #ffffff;
-  --ring: #0369a1;
-  --success: #15803d;
-  --success-bg: #e7f6ec;
+  --accent: #ea580c;
+  --accent-hover: #f97316;
+  --accent-contrast: #1a1207;
+  --ring: #2563eb;
+  --success: #16a34a;
+  --success-bg: #ecfdf3;
   --danger: #dc2626;
-  --danger-bg: #fdeaea;
-  --warning: #b45309;
-  --badge-bg: #eef4f9;
-  --badge-fg: #0b4a6f;
-  --own-bg: #e7f6ec;
-  --own-fg: #166534;
+  --danger-bg: #fef2f2;
+  --warning: #d97706;
+  --badge-bg: #eff6ff;
+  --badge-fg: #1d4ed8;
+  --own-bg: #ecfdf5;
+  --own-fg: #047857;
 
   /* Typography scale */
   --fs-xs: 0.75rem;
@@ -75,17 +78,20 @@
     --text: #e6edf6;
     --text-muted: #9fb0c7;
     --brand: #e6edf6;
-    --primary: #38a3d9;
-    --primary-hover: #57b6e6;
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
     --primary-contrast: #08131f;
-    --ring: #57b6e6;
+    --accent: #fb7139;
+    --accent-hover: #fd8a5b;
+    --accent-contrast: #1a0e06;
+    --ring: #60a5fa;
     --success: #4ade80;
     --success-bg: #12281c;
     --danger: #f87171;
     --danger-bg: #2c1417;
     --warning: #fbbf24;
     --badge-bg: #12233a;
-    --badge-fg: #9ad1f0;
+    --badge-fg: #93c5fd;
     --own-bg: #12281c;
     --own-fg: #86efac;
     --e-1: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -105,17 +111,20 @@
   --text: #e6edf6;
   --text-muted: #9fb0c7;
   --brand: #e6edf6;
-  --primary: #38a3d9;
-  --primary-hover: #57b6e6;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
   --primary-contrast: #08131f;
-  --ring: #57b6e6;
+  --accent: #fb7139;
+  --accent-hover: #fd8a5b;
+  --accent-contrast: #1a0e06;
+  --ring: #60a5fa;
   --success: #4ade80;
   --success-bg: #12281c;
   --danger: #f87171;
   --danger-bg: #2c1417;
   --warning: #fbbf24;
   --badge-bg: #12233a;
-  --badge-fg: #9ad1f0;
+  --badge-fg: #93c5fd;
   --own-bg: #12281c;
   --own-fg: #86efac;
   --e-1: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -298,6 +307,14 @@ a:hover {
 }
 .btn--primary:hover:not(:disabled) {
   background: var(--primary-hover);
+}
+.btn--accent {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+.btn--accent:hover:not(:disabled) {
+  background: var(--accent-hover);
 }
 .btn--secondary {
   background: var(--surface);

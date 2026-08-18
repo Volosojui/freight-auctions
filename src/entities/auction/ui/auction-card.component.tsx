@@ -103,7 +103,7 @@ export function AuctionCard({ vm, onIntent }: AuctionCardProps) {
                 : {}
             }
           >
-            <Button variant={vm.primaryAction.kind === 'view' ? 'secondary' : 'primary'}>
+            <Button variant={vm.primaryAction.kind === 'view' ? 'secondary' : 'accent'}>
               {vm.primaryAction.kind === 'view' ? (
                 <Eye size={16} aria-hidden="true" />
               ) : (

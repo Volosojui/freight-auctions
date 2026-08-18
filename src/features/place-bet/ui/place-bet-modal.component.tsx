@@ -178,7 +178,12 @@ export const PlaceBetModal = observer(function PlaceBetModal({
               <Button type="button" variant="secondary" onClick={onClose}>
                 Отмена
               </Button>
-              <Button type="submit" disabled={isSubmitting} data-testid="bet-submit">
+              <Button
+                type="submit"
+                variant="accent"
+                disabled={isSubmitting}
+                data-testid="bet-submit"
+              >
                 {isSubmitting ? 'Отправка…' : 'Поставить'}
               </Button>
             </div>
