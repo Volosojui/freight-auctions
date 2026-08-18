@@ -1,2 +1,6 @@
 export { handlers } from './handlers'
 export { worker } from './browser'
+export { CITIES, cityByName, type City } from './cities'
+export { getStore, resetStore, type MockStore } from './store'
+export { filterAuctions, paginate, type PageResult } from './query'
+export type { MockAuction } from './types'

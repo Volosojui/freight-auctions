@@ -22,7 +22,7 @@
 
 ## Impact
 
-- Новый код: `src/entities/*` (модели/схемы), `src/shared/api/*` (клиент, request builder, эндпоинты), `src/shared/api/mock/*` (store, seed, словарь городов, хендлеры).
+- Новый код: `src/shared/api/contract/*` (Zod-схемы + типы), `src/shared/api/*` (клиент, request builder, парсер ошибок, эндпоинты), `src/shared/api/mock/*` (store, seed, словарь городов, хендлеры). Слой `entities` в этом change не наполняется — ViewModel-мапперы поверх контракта идут в фиче-change'ах (FSD: `shared` не импортирует «вверх» из `entities`).
 - Зависимости: zod (уже в стеке), msw (уже подключён в `bootstrap-app`). Опционально — генератор данных, если решим в design.
 - Наполняет пустые MSW-хендлеры и `shared/api/mock`, заведённые в `bootstrap-app`.
 - Разблокирует все продуктовые change'и: список, детальную, ставки, форму ставки.
