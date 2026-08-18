@@ -23,9 +23,15 @@
 - [ ] 4.2 Точки входа: переход к `bets-view` (если история не скрыта) и к `place-bet` (если `can_set_bet`)
 - [ ] 4.3 Адаптив desktop/mobile без горизонтального скролла
 
-## 5. Тесты и валидация
+## 5. Приёмочные тесты (сценарии спеки)
 
 - [ ] 5.1 Unit-тесты gate-маппера: каждый флаг скрывает/не скрывает нужные данные; `canSetBet`/`canViewBets`
 - [ ] 5.2 Unit-тесты форматирования цен/дат и лейблов enum (включая `Unknown`)
-- [ ] 5.3 Прогнать `lint`/`test`; проверить not-found и скрытие данных вручную в dev
-- [ ] 5.4 `openspec validate auction-detail --strict` — без ошибок
+- [ ] 5.3 Integration (jsdom+MSW): рендер детальной — все секции, цены (current/available/min/max/step), состояние своей ставки; skeleton/error
+- [ ] 5.4 Integration: соблюдение ограничений DTO — `hide_points_address_and_contacts`, `no_view_cargo_price`, `hide_bets_history`, `can_set_bet=false`; 404 → not-found
+- [ ] 5.5 E2E (Playwright): открытие детальной из списка; кейс со скрытыми данными; недоступность действия ставки при `can_set_bet=false`
+
+## 6. Валидация
+
+- [ ] 6.1 Прогнать `lint`, `test` (unit+integration) и `test:e2e` — всё зелёное
+- [ ] 6.2 `openspec validate auction-detail --strict` — без ошибок

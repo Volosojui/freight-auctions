@@ -27,9 +27,16 @@
 - [ ] 5.1 `pages/auctions-list`: композиция виджета, фильтров и пагинации на маршруте `/`
 - [ ] 5.2 Проверить восстановление фильтров/страницы из URL по прямой ссылке
 
-## 6. Тесты и валидация
+## 6. Приёмочные тесты (сценарии спеки)
 
 - [ ] 6.1 Unit-тесты `parseSearch`/`serializeSearch` (в т.ч. fallback на некорректный URL)
 - [ ] 6.2 Unit-тесты ViewModel-маппера карточки (лейблы, primary action по состояниям)
-- [ ] 6.3 Прогнать `lint`/`test`; проверить skeleton/empty/error и prefetch вручную в dev
-- [ ] 6.4 `openspec validate auctions-list --strict` — без ошибок
+- [ ] 6.3 Integration (jsdom+MSW): рендер страницы списка — skeleton при загрузке, список из моков, empty при `total=0`, error с повтором
+- [ ] 6.4 Integration: фильтр отражается в URL search params и перезапрашивает список; восстановление фильтров/страницы из URL; пагинация
+- [ ] 6.5 Integration: карточка показывает поля контракта и корректный primary action по состоянию
+- [ ] 6.6 E2E (Playwright): список→детальная по клику/hover (prefetch), применение фильтра меняет URL и результат
+
+## 7. Валидация
+
+- [ ] 7.1 Прогнать `lint`, `test` (unit+integration) и `test:e2e` — всё зелёное
+- [ ] 7.2 `openspec validate auctions-list --strict` — без ошибок

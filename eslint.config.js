@@ -63,4 +63,9 @@ export default tseslint.config(
     files: ['src/main.tsx', '**/*.test.{ts,tsx}', 'src/test/**'],
     rules: { 'check-file/filename-naming-convention': 'off' },
   },
+  // Config files and Playwright e2e run in Node.
+  {
+    files: ['*.config.ts', 'e2e/**/*.ts'],
+    languageOptions: { globals: globals.node },
+  },
 )
