@@ -1,0 +1,98 @@
+.bets__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.section__title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+.bets__count {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.bets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bet-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.bet-row--win {
+  border-color: var(--success);
+  background: #f0fdf4;
+}
+.bet-row--rejected {
+  opacity: 0.7;
+}
+.bet-row__place {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+.bet-row__org {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+.bet-row__contact {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.bet-row__rejected {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--danger);
+}
+.bet-row__prices {
+  text-align: right;
+  white-space: nowrap;
+}
+.bet-row__price--novat {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.muted {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Detail tabs (bets-view) */
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.tab {
+  border: none;
+  background: none;
+  padding: 10px 16px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+}
+.tab--active {
+  color: var(--text);
+  border-bottom-color: var(--primary);
+  font-weight: 600;
+}
+.tab:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
